@@ -121,54 +121,52 @@
 
 ## Traceability
 
-Được cập nhật trong quá trình tạo Roadmap.
-
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| AUTH-01 | — | Pending |
-| AUTH-02 | — | Pending |
-| AUTH-03 | — | Pending |
-| EQP-01 | — | Pending |
-| EQP-02 | — | Pending |
-| EQP-03 | — | Pending |
-| EQP-04 | — | Pending |
-| EQP-05 | — | Pending |
-| EQP-06 | — | Pending |
-| SUP-01 | — | Pending |
-| SUP-02 | — | Pending |
-| IMP-01 | — | Pending |
-| IMP-02 | — | Pending |
-| IMP-03 | — | Pending |
-| IMP-04 | — | Pending |
-| EMP-01 | — | Pending |
-| EMP-02 | — | Pending |
-| ASNE-01 | — | Pending |
-| ASNE-02 | — | Pending |
-| ASNE-03 | — | Pending |
-| PROJ-01 | — | Pending |
-| PROJ-02 | — | Pending |
-| PROJ-03 | — | Pending |
-| MAINT-01 | — | Pending |
-| MAINT-02 | — | Pending |
-| MAINT-03 | — | Pending |
-| MAINT-04 | — | Pending |
-| FIN-01 | — | Pending |
-| FIN-02 | — | Pending |
-| FIN-03 | — | Pending |
-| FIN-04 | — | Pending |
-| RPT-01 | — | Pending |
-| RPT-02 | — | Pending |
-| RPT-03 | — | Pending |
-| RPT-04 | — | Pending |
-| RPT-05 | — | Pending |
-| RPT-06 | — | Pending |
-| RPT-07 | — | Pending |
+| AUTH-01 | Phase 1 | Pending |
+| AUTH-02 | Phase 1 | Pending |
+| AUTH-03 | Phase 1 | Pending |
+| EQP-04 | Phase 1 | Pending |
+| SUP-01 | Phase 1 | Pending |
+| EMP-02 | Phase 1 | Pending |
+| EQP-01 | Phase 2 | Pending |
+| EQP-02 | Phase 2 | Pending |
+| EQP-03 | Phase 2 | Pending |
+| EQP-05 | Phase 2 | Pending |
+| EQP-06 | Phase 2 | Pending |
+| EMP-01 | Phase 2 | Pending |
+| PROJ-01 | Phase 2 | Pending |
+| SUP-02 | Phase 3 | Pending |
+| IMP-01 | Phase 3 | Pending |
+| IMP-02 | Phase 3 | Pending |
+| IMP-03 | Phase 3 | Pending |
+| IMP-04 | Phase 3 | Pending |
+| ASNE-01 | Phase 4 | Pending |
+| ASNE-02 | Phase 4 | Pending |
+| ASNE-03 | Phase 4 | Pending |
+| PROJ-02 | Phase 4 | Pending |
+| PROJ-03 | Phase 4 | Pending |
+| MAINT-01 | Phase 5 | Pending |
+| MAINT-02 | Phase 5 | Pending |
+| MAINT-03 | Phase 5 | Pending |
+| MAINT-04 | Phase 5 | Pending |
+| FIN-01 | Phase 5 | Pending |
+| FIN-02 | Phase 5 | Pending |
+| FIN-03 | Phase 5 | Pending |
+| FIN-04 | Phase 5 | Pending |
+| RPT-01 | Phase 6 | Pending |
+| RPT-02 | Phase 6 | Pending |
+| RPT-03 | Phase 6 | Pending |
+| RPT-04 | Phase 6 | Pending |
+| RPT-05 | Phase 6 | Pending |
+| RPT-06 | Phase 6 | Pending |
+| RPT-07 | Phase 6 | Pending |
 
 **Coverage:**
 - v1 requirements: 38 total
-- Mapped to phases: 0 (pending roadmap)
-- Unmapped: 38 ⚠️
+- Mapped to phases: 38
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-04-14*
-*Last updated: 2026-04-14 after initial definition*
+*Last updated: 2026-04-13 after roadmap creation — traceability complete*
