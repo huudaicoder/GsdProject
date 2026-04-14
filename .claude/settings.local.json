@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir -p .planning/phases/01-foundation-archive)",
+      "Bash(mv .planning/phases/01-foundation/01-01-PLAN.md .planning/phases/01-foundation-archive/)",
+      "Bash(mv .planning/phases/01-foundation/01-02-PLAN.md .planning/phases/01-foundation-archive/)",
+      "Bash(mv .planning/phases/01-foundation/01-03-PLAN.md .planning/phases/01-foundation-archive/)",
+      "Bash(mv .planning/phases/01-foundation/01-04-PLAN.md .planning/phases/01-foundation-archive/)"
+    ]
+  }
+}

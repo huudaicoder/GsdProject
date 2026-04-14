@@ -123,44 +123,44 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| AUTH-01 | Phase 1 | Pending |
-| AUTH-02 | Phase 1 | Pending |
-| AUTH-03 | Phase 1 | Pending |
-| EQP-04 | Phase 1 | Pending |
-| SUP-01 | Phase 1 | Pending |
-| EMP-02 | Phase 1 | Pending |
-| EQP-01 | Phase 2 | Pending |
-| EQP-02 | Phase 2 | Pending |
-| EQP-03 | Phase 2 | Pending |
-| EQP-05 | Phase 2 | Pending |
-| EQP-06 | Phase 2 | Pending |
-| EMP-01 | Phase 2 | Pending |
-| PROJ-01 | Phase 2 | Pending |
-| SUP-02 | Phase 3 | Pending |
-| IMP-01 | Phase 3 | Pending |
-| IMP-02 | Phase 3 | Pending |
-| IMP-03 | Phase 3 | Pending |
-| IMP-04 | Phase 3 | Pending |
-| ASNE-01 | Phase 4 | Pending |
-| ASNE-02 | Phase 4 | Pending |
-| ASNE-03 | Phase 4 | Pending |
-| PROJ-02 | Phase 4 | Pending |
-| PROJ-03 | Phase 4 | Pending |
-| MAINT-01 | Phase 5 | Pending |
-| MAINT-02 | Phase 5 | Pending |
-| MAINT-03 | Phase 5 | Pending |
-| MAINT-04 | Phase 5 | Pending |
-| FIN-01 | Phase 5 | Pending |
-| FIN-02 | Phase 5 | Pending |
-| FIN-03 | Phase 5 | Pending |
-| FIN-04 | Phase 5 | Pending |
-| RPT-01 | Phase 6 | Pending |
-| RPT-02 | Phase 6 | Pending |
-| RPT-03 | Phase 6 | Pending |
-| RPT-04 | Phase 6 | Pending |
-| RPT-05 | Phase 6 | Pending |
-| RPT-06 | Phase 6 | Pending |
-| RPT-07 | Phase 6 | Pending |
+| AUTH-01 | Phase 1 — Admin Login + JWT | Pending |
+| AUTH-02 | Phase 1 — Admin Login + JWT | Pending |
+| AUTH-03 | Phase 2 — Audit Trail | Pending |
+| EQP-04 | Phase 3 — Equipment Categories | Pending |
+| SUP-01 | Phase 4 — Suppliers | Pending |
+| EMP-02 | Phase 5 — Departments | Pending |
+| EQP-01 | Phase 6 — Equipment Catalog | Pending |
+| EQP-02 | Phase 6 — Equipment Catalog | Pending |
+| EQP-03 | Phase 6 — Equipment Catalog | Pending |
+| EQP-05 | Phase 6 — Equipment Catalog | Pending |
+| EQP-06 | Phase 6 — Equipment Catalog | Pending |
+| EMP-01 | Phase 7 — Employee Management | Pending |
+| PROJ-01 | Phase 8 — Project Management | Pending |
+| SUP-02 | Phase 9 — Import Flow | Pending |
+| IMP-01 | Phase 9 — Import Flow | Pending |
+| IMP-02 | Phase 9 — Import Flow | Pending |
+| IMP-03 | Phase 10 — Supplier Payments | Pending |
+| IMP-04 | Phase 10 — Supplier Payments | Pending |
+| ASNE-01 | Phase 11 — Employee Assignment | Pending |
+| ASNE-02 | Phase 11 — Employee Assignment | Pending |
+| ASNE-03 | Phase 12 — Damage Penalty | Pending |
+| PROJ-02 | Phase 13 — Project Allocation | Pending |
+| PROJ-03 | Phase 13 — Project Allocation | Pending |
+| MAINT-01 | Phase 14 — Maintenance | Pending |
+| MAINT-02 | Phase 14 — Maintenance | Pending |
+| MAINT-03 | Phase 14 — Maintenance | Pending |
+| MAINT-04 | Phase 15 — Liquidation | Pending |
+| FIN-01 | Phase 16 — Financial Summary | Pending |
+| FIN-02 | Phase 16 — Financial Summary | Pending |
+| FIN-03 | Phase 16 — Financial Summary | Pending |
+| FIN-04 | Phase 16 — Financial Summary | Pending |
+| RPT-01 | Phase 17 — Dashboard | Pending |
+| RPT-02 | Phase 18 — Reports | Pending |
+| RPT-03 | Phase 18 — Reports | Pending |
+| RPT-04 | Phase 18 — Reports | Pending |
+| RPT-05 | Phase 18 — Reports | Pending |
+| RPT-06 | Phase 19 — Export | Pending |
+| RPT-07 | Phase 19 — Export | Pending |
 
 **Coverage:**
 - v1 requirements: 38 total
@@ -169,4 +169,4 @@
 
 ---
 *Requirements defined: 2026-04-14*
-*Last updated: 2026-04-13 after roadmap creation — traceability complete*
+*Last updated: 2026-04-15 — roadmap restructured from 6 phases to 19 phases (1 feature per phase)*

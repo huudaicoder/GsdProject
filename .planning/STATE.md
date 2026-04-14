@@ -2,14 +2,14 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-current_phase: None (roadmap created, planning not started)
+current_phase: None (roadmap restructured, planning not started)
 current_plan: None
-status: executing
-last_updated: "2026-04-14T01:15:26.482Z"
+status: planning
+last_updated: "2026-04-15"
 progress:
-  total_phases: 6
+  total_phases: 19
   completed_phases: 0
-  total_plans: 6
+  total_plans: 0
   completed_plans: 0
   percent: 0
 ---
@@ -34,21 +34,34 @@ progress:
 ## Current Position
 
 **Milestone:** M1 (v1 — full system)
-**Current Phase:** None (roadmap created, planning not started)
+**Current Phase:** None (roadmap restructured 2026-04-15 — planning not started)
 **Current Plan:** None
-**Status:** Ready to execute
+**Status:** Ready to plan Phase 1
 
 **Progress:**
 
 ```
-Phase 1: Foundation                              [ Not started ]
-Phase 2: Equipment Catalog & Core Entities       [ Not started ]
-Phase 3: Import Flow                             [ Not started ]
-Phase 4: Assignment Transaction Engine           [ Not started ]
-Phase 5: Maintenance, Liquidation & Finance      [ Not started ]
-Phase 6: Reports & Dashboard                     [ Not started ]
+Phase 1:  Admin Login + JWT          [ Not started ]
+Phase 2:  Audit Trail                [ Not started ]
+Phase 3:  Equipment Categories       [ Not started ]
+Phase 4:  Suppliers                  [ Not started ]
+Phase 5:  Departments                [ Not started ]
+Phase 6:  Equipment Catalog          [ Not started ]
+Phase 7:  Employee Management        [ Not started ]
+Phase 8:  Project Management         [ Not started ]
+Phase 9:  Import Flow                [ Not started ]
+Phase 10: Supplier Payments          [ Not started ]
+Phase 11: Employee Assignment        [ Not started ]
+Phase 12: Damage Penalty             [ Not started ]
+Phase 13: Project Allocation         [ Not started ]
+Phase 14: Maintenance                [ Not started ]
+Phase 15: Liquidation                [ Not started ]
+Phase 16: Financial Summary          [ Not started ]
+Phase 17: Dashboard                  [ Not started ]
+Phase 18: Reports                    [ Not started ]
+Phase 19: Export                     [ Not started ]
 
-Overall: ░░░░░░░░░░░░░░░░░░░░ 0/6 phases
+Overall: ░░░░░░░░░░░░░░░░░░░░ 0/19 phases
 ```
 
 ---
@@ -78,19 +91,32 @@ Overall: ░░░░░░░░░░░░░░░░░░░░ 0/6 phases
 ### Phase Dependencies
 
 ```
-Phase 1 (Foundation)
-  └── Phase 2 (Equipment Catalog + Core Entities)
-        └── Phase 3 (Import Flow)
-              └── Phase 4 (Assignment Engine)
-                    └── Phase 5 (Maintenance + Finance)
-                          └── Phase 6 (Reports + Dashboard)
+Phase 1 (Login + JWT)
+  └── Phase 2 (Audit Trail)
+        └── Phase 3 (Categories)
+              └── Phase 4 (Suppliers)
+                    └── Phase 5 (Departments)
+                          └── Phase 6 (Equipment Catalog)
+                                └── Phase 7 (Employees)
+                                      └── Phase 8 (Projects)
+                                            └── Phase 9 (Import Flow)
+                                                  └── Phase 10 (Supplier Payments)
+                                                        └── Phase 11 (Employee Assignment)
+                                                              └── Phase 12 (Damage Penalty)
+                                                                    └── Phase 13 (Project Allocation)
+                                                                          └── Phase 14 (Maintenance)
+                                                                                └── Phase 15 (Liquidation)
+                                                                                      └── Phase 16 (Financial Summary)
+                                                                                            └── Phase 17 (Dashboard)
+                                                                                                  └── Phase 18 (Reports)
+                                                                                                        └── Phase 19 (Export)
 ```
 
 ---
 
 ## Todos
 
-- [ ] Plan Phase 1 via `/gsd-plan-phase 1`
+- [ ] Run `/gsd-discuss-phase 1` then `/gsd-plan-phase 1` (Admin Login + JWT)
 
 ---
 
@@ -102,20 +128,18 @@ None.
 
 ## Session Continuity
 
-**Next action:** Run `/gsd-plan-phase 1` to create execution plans for Phase 1 (Foundation).
+**Next action:** Run `/gsd-plan-phase 1` to plan Phase 1 (Admin Login + JWT).
 
-**Phase 1 scope reminder:**
+**Phase 1 scope (AUTH-01, AUTH-02):**
+- Project scaffold: .NET Clean Architecture solution + Angular 19 + PrimeNG
+- Backend: ASP.NET Core Identity, JWT Bearer, login endpoint with specific Vietnamese error messages
+- Frontend: Split-layout login page, AuthService (Signals + localStorage), AuthGuard, JWT interceptor
+- App shell: sidebar with full nav (disabled unbuilt items), header with page title + logout
 
-- AUTH-01, AUTH-02, AUTH-03: JWT login, session persistence, audit trail
-- EQP-04: Category CRUD
-- SUP-01: Supplier CRUD
-- EMP-02: Department CRUD
-
-**Build order within phases:**
-
-1. DB schema + EF Core entities (all other code references these)
-2. JWT auth (every API endpoint needs this; Angular needs auth guard)
-3. Reference data CRUD — Category, Department, Supplier (no complex FK dependencies)
+**Note:** Roadmap restructured 2026-04-15 from 6 phases to 19 phases (1 feature per phase).
+Old Phase 1 PLAN.md files archived in `.planning/phases/01-foundation-archive/`.
+CONTEXT.md and UI-SPEC.md from old Phase 1 remain valid reference for new Phases 1–5.
 
 ---
 *State initialized: 2026-04-13 during roadmap creation*
+*Restructured: 2026-04-15 — 6 phases → 19 granular phases*
