@@ -31,7 +31,14 @@
   3. The system records an audit log entry (who, what action, when, old/new values) for every write operation performed by admin
   4. Admin can add, edit, and delete equipment categories (e.g., IT, Van phong, Cong nghiep) through the Angular UI
   5. Admin can add, edit, and delete suppliers and departments through the Angular UI
-**Plans**: TBD
+**Plans**: 6 plans
+Plans:
+- [ ] 01-01-PLAN.md — Scaffold .NET Clean Architecture + Angular 19 + PrimeNG + ESLint/Prettier
+- [ ] 01-02-PLAN.md — JWT authentication backend + audit trail interceptor
+- [ ] 01-03-PLAN.md — Angular app shell (sidebar + header), login page, auth guard
+- [ ] 01-04-PLAN.md — Categories CRUD (backend + frontend)
+- [ ] 01-05-PLAN.md — Departments CRUD (backend + frontend) + Phase 1 verification checkpoint
+- [ ] 01-06-PLAN.md — Suppliers CRUD (backend + frontend)
 **UI hint**: yes
 
 ### Phase 2: Equipment Catalog & Core Entities
@@ -104,7 +111,7 @@
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 0/0 | Not started | - |
+| 1. Foundation | 0/6 | Not started | - |
 | 2. Equipment Catalog & Core Entities | 0/0 | Not started | - |
 | 3. Import Flow | 0/0 | Not started | - |
 | 4. Assignment Transaction Engine | 0/0 | Not started | - |
