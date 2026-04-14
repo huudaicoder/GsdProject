@@ -18,6 +18,7 @@
 | CQRS + MediatR | MediatR 14.x | Request handling | Separates reads (queries) from writes (commands). Each handler has one job. Pipeline behaviors replace manual cross-cutting concerns. Fits Clean Architecture naturally. Use because the app has 30+ distinct operations with different validation/caching needs. |
 | FluentValidation | 12.x | Input validation | `FluentValidation.DependencyInjectionExtensions` for DI. Place validators in Application layer as MediatR pipeline behavior. Cleaner than Data Annotations for complex rules (e.g., "end date after start date", "fine amount positive only for damaged returns"). |
 | AutoMapper | 13.x | DTO mapping | Reduces mapping boilerplate between domain entities and DTOs. Acceptable overhead for CRUD-heavy apps. Alternative: Mapster (slightly faster) but AutoMapper has broader documentation and is more familiar to .NET teams. |
+| Stateless | 5.x | Equipment state machine | Enforces valid Equipment.Status transitions (InStock → Assigned → InStock etc.). The `Stateless` library is the .NET standard for lightweight, declarative state machines. Prevents illegal transitions at the service layer — see PITFALLS.md Pitfall 1 for why this is mandatory. |
 
 **Confidence:** HIGH — Clean Architecture + CQRS + MediatR is the dominant pattern for .NET enterprise projects in 2025, confirmed by multiple official guides and community consensus.
 
@@ -43,6 +44,8 @@
 | SQL Server | 2019+ / 2022 | Primary database | Team is in the .NET / Microsoft ecosystem. SQL Server has the best EF Core support (SQL Server provider is the reference implementation). Always-On availability groups are available if HA is needed later. The licensing cost is real but typical for enterprise .NET shops that already have SQL Server. |
 
 **Alternative considered:** PostgreSQL (Npgsql EF Core provider is excellent, free, cross-platform). Choose PostgreSQL instead if: (a) the company doesn't already have SQL Server licenses, or (b) the team plans to deploy on Linux. The migration path is straightforward. For v1, default to SQL Server to match Microsoft ecosystem expectations.
+
+**⚠ Project Decision D-01 locks PostgreSQL** — CONTEXT.md Phase 1 explicitly chose PostgreSQL over SQL Server. Use `Npgsql.EntityFrameworkCore.PostgreSQL` (not SqlServer provider) throughout the project.
 
 **Confidence:** MEDIUM — SQL Server is the pragmatic default for .NET enterprise shops, but the decision depends on existing infrastructure. Verify with team whether SQL Server is already licensed.
 
@@ -221,8 +224,9 @@ dotnet add package MediatR --version 14.*
 dotnet add package FluentValidation --version 12.*
 dotnet add package FluentValidation.DependencyInjectionExtensions --version 12.*
 dotnet add package AutoMapper --version 13.*
-dotnet add package Microsoft.EntityFrameworkCore.SqlServer --version 9.*
+dotnet add package Npgsql.EntityFrameworkCore.PostgreSQL --version 9.*
 dotnet add package Microsoft.EntityFrameworkCore.Tools --version 9.*
+dotnet add package Stateless --version 5.*
 dotnet add package Dapper --version 2.*
 dotnet add package EFCore.BulkExtensions --version 8.*
 dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer --version 9.*
