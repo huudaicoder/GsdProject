@@ -8,19 +8,28 @@
 
 ## Recommended Stack
 
-### Backend — Core Framework
+### Backend — Core Framework (ABP Framework)
 
 | Technology | Version | Purpose | Why |
 |------------|---------|---------|-----|
-| ASP.NET Core | 9.0 (LTS Nov 2024) | Web API host | Required by team. .NET 9 is current stable; .NET 10 arrives Nov 2025 but not yet LTS |
-| Controller-based API | built-in | REST endpoints | 50+ endpoints with shared filters (auth, validation, error handling) — controllers scale better than minimal APIs for this complexity. Minimal APIs shine for microservices, not large CRUD apps. |
-| Clean Architecture | pattern | Project structure | Domain / Application / Infrastructure / Presentation layers. Enforces testability and prevents EF Core bleeding into controllers. Industry standard for .NET enterprise in 2025. |
-| CQRS + MediatR | MediatR 14.x | Request handling | Separates reads (queries) from writes (commands). Each handler has one job. Pipeline behaviors replace manual cross-cutting concerns. Fits Clean Architecture naturally. Use because the app has 30+ distinct operations with different validation/caching needs. |
-| FluentValidation | 12.x | Input validation | `FluentValidation.DependencyInjectionExtensions` for DI. Place validators in Application layer as MediatR pipeline behavior. Cleaner than Data Annotations for complex rules (e.g., "end date after start date", "fine amount positive only for damaged returns"). |
-| AutoMapper | 13.x | DTO mapping | Reduces mapping boilerplate between domain entities and DTOs. Acceptable overhead for CRUD-heavy apps. Alternative: Mapster (slightly faster) but AutoMapper has broader documentation and is more familiar to .NET teams. |
-| Stateless | 5.x | Equipment state machine | Enforces valid Equipment.Status transitions (InStock → Assigned → InStock etc.). The `Stateless` library is the .NET standard for lightweight, declarative state machines. Prevents illegal transitions at the service layer — see PITFALLS.md Pitfall 1 for why this is mandatory. |
+| ASP.NET Core | 9.0 (LTS) | Web API host | Required by team. ABP 9.x targets .NET 9. |
+| **ABP Framework (Community)** | **9.x** | **Full-stack DDD framework** | Provides: Clean Architecture scaffold (6-layer solution), Identity, Audit Logging, CRUD base services, Permission system, Repository pattern, Unit of Work, Module system. Eliminates ~60% boilerplate for a CRUD-heavy admin app. Free, MIT license, open source. |
+| ABP Application Services | built-in | Request handling | Replaces MediatR. `CrudAppService<TEntity, TDto, TKey>` auto-generates CRUD + pagination + sorting. Extend `ApplicationService` for custom business logic. ABP generates HTTP API controllers automatically from app service interfaces. |
+| FluentValidation | 12.x | Input validation | ABP integrates via `Volo.Abp.FluentValidation`. Place validators in `Application.Contracts` layer. Triggered automatically by ABP pipeline. |
+| AutoMapper (via ABP IObjectMapper) | 13.x | DTO mapping | ABP uses AutoMapper internally via `IObjectMapper`. Configure mappings in Application layer `AutoMapperProfile`. |
+| Stateless | 5.x | Equipment state machine | Enforces valid Equipment.Status transitions. ABP does not provide a state machine — `Stateless` library still required in Domain layer. See PITFALLS.md Pitfall 1. |
 
-**Confidence:** HIGH — Clean Architecture + CQRS + MediatR is the dominant pattern for .NET enterprise projects in 2025, confirmed by multiple official guides and community consensus.
+**ABP Solution Structure (6 projects):**
+```
+KhoThietBi.Domain.Shared         ← Enums, error codes, consts (no EF dependency)
+KhoThietBi.Domain                ← Entities, domain services, repository interfaces
+KhoThietBi.Application.Contracts ← DTOs, app service interfaces, permissions
+KhoThietBi.Application           ← CrudAppService implementations
+KhoThietBi.EntityFrameworkCore   ← DbContext, EF configurations, migrations
+KhoThietBi.HttpApi.Host          ← Program.cs, appsettings (entry point)
+```
+
+**Confidence:** HIGH — ABP Framework 9.x is a mature, widely-used framework that pairs naturally with the DDD/Clean Architecture requirements of this project. Community edition covers all needed features.
 
 ---
 
@@ -51,15 +60,24 @@
 
 ---
 
-### Backend — Authentication
+### Backend — Authentication (ABP Identity + OpenIddict)
 
 | Technology | Version | Purpose | Why |
 |------------|---------|---------|-----|
-| ASP.NET Core Identity | built-in | User store, password hashing | Admin-only system. Identity handles password hashing, lockout, and user management without custom code. Do NOT integrate Active Directory (explicitly out of scope per PROJECT.md). |
-| JWT Bearer Tokens | Microsoft.AspNetCore.Authentication.JwtBearer 9.x | Stateless auth | Angular SPA needs token-based auth. JWT with short lifetime (15-60 min) + refresh tokens is the 2025 standard. Use HS256 signing for single-service (no multi-service token validation needed). Store JWT secret in environment variables / secrets management. |
-| Role-based authorization | built-in | Admin-only access | Simple `[Authorize(Roles = "Admin")]` attribute. System is admin-only but keep the door open to adding a ReadOnly role later without rewrites. |
+| **ABP Identity Module** | built-in (ABP 9.x) | User store, roles, permissions | Provides full ASP.NET Core Identity integration with ABP's Permission system. Handles password hashing, lockout, user management. Pre-wired — no manual `AddIdentity()` setup needed. |
+| **ABP OpenIddict Module** | built-in (ABP 9.x) | Token server (OAuth2/OIDC) | ABP Community uses OpenIddict as the token server. Issues JWT access tokens + refresh tokens. Pre-configured for SPA (Authorization Code + PKCE). Replaces manual `JwtBearer` configuration. |
+| ABP Permission System | built-in | Admin-only access | Permissions defined in `Application.Contracts` via `PermissionDefinitionProvider`. `[Authorize(KhoThietBiPermissions.Equipment.Create)]` — granular and extensible without code changes. |
 
-**Confidence:** HIGH — JWT + ASP.NET Core Identity is the canonical approach for admin-only SPAs. No third-party identity provider needed at this scale.
+**ABP Auth flow for Angular SPA:**
+```
+Angular → POST /connect/token (OpenIddict) → JWT access token (15 min) + refresh token
+Angular interceptor → attaches Bearer token to all API calls
+Token expires → interceptor auto-refreshes via /connect/token (refresh_token grant)
+```
+
+**D-08 decision:** JWT lifetime = 8 hours for this admin-only internal tool (no refresh token complexity needed for v1). Can be configured in `appsettings.json` under OpenIddict settings.
+
+**Confidence:** HIGH — ABP Identity + OpenIddict is the standard auth stack for ABP Community 9.x. Pre-configured, no manual JWT plumbing.
 
 ---
 
@@ -95,7 +113,7 @@
 
 | Technology | Version | Purpose | Why |
 |------------|---------|---------|-----|
-| Serilog | 4.x (Serilog.AspNetCore 8.x) | Structured logging | Structured events (JSON) rather than plain text. Sinks: Console (dev), File (prod). Enrichers: FromLogContext, WithMachineName. MediatR pipeline behavior logs all commands/queries automatically. |
+| Serilog | 4.x (Serilog.AspNetCore 8.x) | Structured logging | Structured events (JSON) rather than plain text. Sinks: Console (dev), File (prod). Enrichers: FromLogContext, WithMachineName. ABP pipeline behaviors (ABP Audit Logging) handle cross-cutting logging automatically. |
 | Serilog.Sinks.File | latest | Log persistence | Rotating daily log files. Sufficient for single-server v1. |
 | Swagger / Scalar | via Swashbuckle or Scalar | API documentation | Dev/test tooling. Swashbuckle.AspNetCore is the standard; Scalar is a newer, cleaner alternative. Either works — pick based on team preference. |
 
@@ -197,7 +215,8 @@
 
 | Technology | Why Avoid |
 |------------|-----------|
-| Minimal APIs (only) | Appropriate for microservices and simple endpoints. 50+ endpoints with shared filters, complex routing, and team familiarity with MVC controllers — use controllers. Minimal APIs can be added selectively if needed. |
+| MediatR | Not needed — ABP Application Services (`CrudAppService`, `ApplicationService`) replace MediatR commands/queries with less boilerplate. Adding MediatR on top of ABP is redundant indirection. |
+| Minimal APIs (only) | ABP generates HTTP API controllers automatically from `IApplicationService` interfaces — no manual controller code needed. Minimal APIs are not used in the ABP stack. |
 | NgRx (classic, v1) | Excessive boilerplate for admin-only CRUD. Signal-based service stores are sufficient and far simpler to maintain. Graduate to NgRx Signal Store if complexity demands. |
 | EPPlus | Requires commercial license for business use. ClosedXML covers all report needs under MIT license. |
 | iTextSharp | Deprecated .NET port of iText. Not maintained for new .NET versions. Use QuestPDF instead. |
@@ -212,34 +231,46 @@
 ## Installation Commands
 
 ```bash
-# .NET — create solution structure
-dotnet new sln -n EquipmentManagement
-dotnet new webapi -n EquipmentManagement.API --framework net9.0
-dotnet new classlib -n EquipmentManagement.Application --framework net9.0
-dotnet new classlib -n EquipmentManagement.Domain --framework net9.0
-dotnet new classlib -n EquipmentManagement.Infrastructure --framework net9.0
+# Prerequisites
+dotnet tool install -g Volo.Abp.Cli  # ABP CLI
+abp --version  # verify: should show 9.x
 
-# Backend NuGet packages (API + Infrastructure)
-dotnet add package MediatR --version 14.*
-dotnet add package FluentValidation --version 12.*
-dotnet add package FluentValidation.DependencyInjectionExtensions --version 12.*
-dotnet add package AutoMapper --version 13.*
-dotnet add package Npgsql.EntityFrameworkCore.PostgreSQL --version 9.*
-dotnet add package Microsoft.EntityFrameworkCore.Tools --version 9.*
+# Scaffold ABP solution (no UI — Angular is separate)
+abp new KhoThietBi -t app --ui none --database-provider ef -dbms PostgreSQL
+
+# This generates the 6-project structure:
+# KhoThietBi.Domain.Shared
+# KhoThietBi.Domain
+# KhoThietBi.Application.Contracts
+# KhoThietBi.Application
+# KhoThietBi.EntityFrameworkCore
+# KhoThietBi.HttpApi.Host
+
+# Additional NuGet packages (not included by default in ABP template)
+# Add to KhoThietBi.Domain:
 dotnet add package Stateless --version 5.*
+
+# Add to KhoThietBi.Application (or Infrastructure):
 dotnet add package Dapper --version 2.*
-dotnet add package EFCore.BulkExtensions --version 8.*
-dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer --version 9.*
-dotnet add package Microsoft.AspNetCore.Identity.EntityFrameworkCore --version 9.*
 dotnet add package ClosedXML --version 0.105.*
 dotnet add package QuestPDF --version 2025.*
 dotnet add package SixLabors.ImageSharp --version 3.*
+
+# Add to KhoThietBi.HttpApi.Host:
 dotnet add package Serilog.AspNetCore --version 8.*
 dotnet add package Serilog.Sinks.File
-dotnet add package Swashbuckle.AspNetCore --version 7.*
+
+# Note: ABP template already includes:
+# - Volo.Abp.EntityFrameworkCore.PostgreSQL (via -dbms PostgreSQL flag)
+# - Volo.Abp.Identity (Identity module)
+# - Volo.Abp.OpenIddict (token server)
+# - Volo.Abp.FluentValidation (FluentValidation integration)
+# - Volo.Abp.AutoMapper (AutoMapper integration)
+# - Volo.Abp.Swashbuckle (Swagger)
+# - Volo.Abp.AuditLogging (Audit Trail module)
 
 # Angular — scaffold new project
-npx @angular/cli@19 new equipment-management-ui --standalone --routing --style=scss --strict
+npx @angular/cli@19 new kho-thiet-bi-ui --standalone --routing --style=scss --strict
 
 # Angular packages
 npm install primeng@19 primeicons
@@ -253,14 +284,16 @@ npm install prettier --save-dev
 
 | Category | Recommended | Alternative | Why Not |
 |----------|-------------|-------------|---------|
-| ORM | EF Core 9 | Dapper (primary) | Dapper lacks migrations; development speed suffers for greenfield. Use Dapper for reports only. |
+| Backend framework | ABP Framework Community 9.x | Manual Clean Architecture + MediatR | ABP provides scaffold, Identity, Audit Logging, and CRUD base services out of the box. Manual setup is ~60% more boilerplate for the same features. |
+| Request handling | ABP Application Services | MediatR | MediatR adds indirection on top of ABP. CrudAppService covers 80% of CRUD cases; ApplicationService covers the rest. |
+| ORM | EF Core 9 (via ABP) | Dapper (primary) | Dapper lacks migrations; development speed suffers for greenfield. Use Dapper for complex reporting queries only. |
 | Excel export | ClosedXML | EPPlus | EPPlus requires commercial license. ClosedXML is MIT. |
 | PDF generation | QuestPDF | iText 7 | iText 7 has AGPL/commercial license complexity. QuestPDF API is cleaner for report generation. |
 | State management | Signals + Services | NgRx | NgRx boilerplate unjustified for admin-only CRUD system. |
 | UI library | PrimeNG | Angular Material | Material's data table less capable out-of-the-box for inventory management use case. |
-| Database | SQL Server | PostgreSQL | SQL Server preferred for Microsoft ecosystem teams with existing licenses. PostgreSQL is viable alternative if licenses are a concern. |
+| Database | PostgreSQL | SQL Server | D-01 decision locks PostgreSQL. No existing SQL Server licenses; PostgreSQL is free, cross-platform, and has excellent EF Core support via Npgsql. |
 | Image resize | ImageSharp | System.Drawing | System.Drawing is deprecated on non-Windows and not recommended for server-side image processing. ImageSharp is the official replacement. |
-| API style | Controllers | Minimal APIs | Controllers are better for 50+ endpoints with shared behaviors. |
+| API style | ABP auto-generated controllers | Manual controllers / Minimal APIs | ABP generates HTTP API controllers automatically from IApplicationService interfaces — no manual wiring. |
 
 ---
 
@@ -268,20 +301,26 @@ npm install prettier --save-dev
 
 | Area | Confidence | Basis |
 |------|------------|-------|
-| .NET 9 + Clean Architecture + CQRS + MediatR | HIGH | Multiple official guides + GitHub examples from 2025 confirm this as the dominant pattern |
+| ABP Framework Community 9.x | HIGH | Mature framework (10+ years), 13k+ GitHub stars, active 2025 maintenance, .NET 9 support confirmed |
+| ABP Application Services replacing MediatR | HIGH | CrudAppService is the ABP-native CRUD pattern; well-documented, widely used in ABP projects |
+| ABP Identity + OpenIddict for auth | HIGH | Pre-wired in ABP Community template; OpenIddict is the ABP-recommended token server since ABP 7.x |
 | EF Core 9 primary + Dapper for reports | HIGH | 2025 benchmark comparisons confirm EF Core 9's narrowed performance gap; hybrid pattern is well-documented |
+| PostgreSQL + Npgsql | HIGH | D-01 decision locked; Npgsql is mature, EF Core 9 support is first-class |
 | ClosedXML for Excel | HIGH | MIT license, active maintenance (0.105.0 released 2025), .NET Standard 2.0 target covers .NET 9 |
 | QuestPDF for PDF | MEDIUM | Strong community adoption in 2025, fluent API is excellent — but verify commercial license vs company revenue |
 | PrimeNG for Angular UI | MEDIUM-HIGH | Widely recommended for data-heavy Angular admin UIs; Angular 19 Signal-ready; verify team preference |
 | Angular Signals (no NgRx) | HIGH | 2025 Angular community consensus: use signals + services first, graduate to NgRx only for complex state |
-| JWT + ASP.NET Core Identity | HIGH | Standard pattern for admin-only SPA; no third-party identity server needed |
-| SQL Server | MEDIUM | Pragmatic default for .NET ecosystem; depends on existing license availability — confirm with team |
-| Local filesystem for images | MEDIUM | Acceptable for single-server v1; abstract behind interface for future cloud migration |
+| Local filesystem for images | MEDIUM | Acceptable for single-server v1; abstract behind IFileStorageService for future cloud migration |
 
 ---
 
 ## Sources
 
+- [ABP Framework Documentation — abp.io](https://abp.io/docs)
+- [ABP Community Edition — abp.io/get-started](https://abp.io/get-started)
+- [ABP Application Services — abp.io/docs/application-services](https://abp.io/docs/latest/framework/architecture/domain-driven-design/application-services)
+- [ABP OpenIddict Integration — abp.io](https://abp.io/docs/latest/framework/infrastructure/openiddict)
+- [ABP Audit Logging — abp.io](https://abp.io/docs/latest/framework/infrastructure/audit-logging)
 - [ASP.NET Core Minimal APIs vs Controllers — Microsoft Learn](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/apis)
 - [CQRS and Clean Architecture in .NET 9 — Medium (Aug 2025)](https://medium.com/@michaelmaurice410/cqrs-and-clean-architecture-in-net-9-54f6a736f383)
 - [Angular State Management for 2025 — Nx Blog](https://nx.dev/blog/angular-state-management-2025)
