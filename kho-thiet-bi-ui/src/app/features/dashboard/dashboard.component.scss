@@ -1,0 +1,82 @@
+.dashboard {
+  max-width: 1200px;
+}
+
+.dashboard-header {
+  margin-bottom: 24px;
+}
+
+.dashboard-title {
+  font-size: 1.25rem; // Heading per UI-SPEC
+  font-weight: 600;
+  color: #111827;
+  margin: 0 0 4px;
+}
+
+.dashboard-subtitle {
+  font-size: 0.875rem;
+  color: #6B7280; // UI-SPEC secondary text
+  margin: 0;
+}
+
+.kpi-grid {
+  display: flex;
+  gap: 24px; // 2xl token for card-to-card gap
+  flex-wrap: wrap;
+}
+
+.kpi-card {
+  flex: 1;
+  min-width: 160px;
+  height: 120px; // UI-SPEC fixed height
+  background: #FFFFFF;
+  border: 1px solid #E5E7EB;
+  border-radius: 8px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  .kpi-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .kpi-label {
+    font-size: 0.875rem; // Body size
+    font-weight: 400;
+    color: #6B7280;
+  }
+
+  .kpi-icon {
+    font-size: 1.5rem; // 24px per UI-SPEC
+    color: #2563EB; // accent color
+  }
+
+  .kpi-value {
+    font-size: 1.25rem; // Heading size per UI-SPEC
+    font-weight: 600;
+    color: #111827;
+  }
+}
+
+.kpi-notice {
+  text-align: center;
+  font-size: 0.875rem;
+  color: #9CA3AF; // UI-SPEC subtle notice
+  margin-top: 32px;
+}
+
+// Responsive: tablet 2-per-row, mobile 1-per-row (UI-SPEC)
+@media (max-width: 1024px) {
+  .kpi-card {
+    min-width: calc(50% - 12px);
+  }
+}
+
+@media (max-width: 640px) {
+  .kpi-card {
+    min-width: 100%;
+  }
+}

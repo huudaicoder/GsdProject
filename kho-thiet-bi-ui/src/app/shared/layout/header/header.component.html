@@ -1,0 +1,17 @@
+<p-toolbar styleClass="header-toolbar">
+  <div class="p-toolbar-group-start">
+    <h1 class="page-title">{{ pageTitle }}</h1>
+  </div>
+  <div class="p-toolbar-group-end">
+    <div class="admin-info">
+      <div class="avatar-circle">{{ adminInitials }}</div>
+      <span class="admin-name">{{ adminName() }}</span>
+      <p-button
+        label="Dang xuat"
+        [outlined]="true"
+        size="small"
+        (onClick)="logout()"
+      />
+    </div>
+  </div>
+</p-toolbar>

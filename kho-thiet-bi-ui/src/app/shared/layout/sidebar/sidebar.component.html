@@ -1,0 +1,58 @@
+<nav class="sidebar">
+  <!-- Logo area -->
+  <div class="sidebar-logo">
+    <div class="logo-initials">KTB</div>
+    <span class="logo-text">KhoThietBi</span>
+  </div>
+
+  <!-- Dashboard (standalone, not in a group) -->
+  <a
+    class="nav-item"
+    [routerLink]="dashboardItem.route"
+    routerLinkActive="active"
+    [routerLinkActiveOptions]="{ exact: false }"
+  >
+    <i [class]="dashboardItem.icon"></i>
+    <span>{{ dashboardItem.label }}</span>
+  </a>
+
+  <!-- Collapsible groups -->
+  @for (group of navGroups; track group.label) {
+    <div class="nav-group">
+      <button
+        class="group-header"
+        [class.group-active]="group.expanded"
+        (click)="toggleGroup(group)"
+      >
+        <i [class]="group.icon"></i>
+        <span>{{ group.label }}</span>
+        <i class="chevron" [class]="group.expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>
+      </button>
+
+      @if (group.expanded) {
+        <div class="group-items">
+          @for (item of group.items; track item.label) {
+            @if (item.disabled) {
+              <span
+                class="nav-item disabled"
+                [title]="'Chuc nang nay chua duoc trien khai.'"
+              >
+                <i [class]="item.icon"></i>
+                <span>{{ item.label }}</span>
+              </span>
+            } @else {
+              <a
+                class="nav-item"
+                [routerLink]="item.route"
+                routerLinkActive="active"
+              >
+                <i [class]="item.icon"></i>
+                <span>{{ item.label }}</span>
+              </a>
+            }
+          }
+        </div>
+      }
+    </div>
+  }
+</nav>

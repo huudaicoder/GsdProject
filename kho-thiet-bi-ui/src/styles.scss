@@ -1,0 +1,36 @@
+// PrimeIcons
+@import "primeicons/primeicons.css";
+
+// Google Fonts — Inter
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+// Global styles (UI-SPEC design system)
+:root {
+  --color-bg: #F8F9FA;
+  --color-surface: #FFFFFF;
+  --color-accent: #2563EB;
+  --color-accent-light: #EFF6FF;
+  --color-destructive: #DC2626;
+  --color-text-primary: #111827;
+  --color-text-secondary: #6B7280;
+  --color-text-disabled: #9CA3AF;
+  --color-border: #E5E7EB;
+  --color-login-left: #1E3A5F;
+
+  --sidebar-width: 256px;
+  --header-height: 56px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--color-text-primary);
+  background-color: var(--color-bg);
+}

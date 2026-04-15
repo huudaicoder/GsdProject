@@ -1,0 +1,12 @@
+{
+  "/connect": {
+    "target": "https://localhost:44369",
+    "secure": false,
+    "changeOrigin": true
+  },
+  "/api": {
+    "target": "https://localhost:44369",
+    "secure": false,
+    "changeOrigin": true
+  }
+}

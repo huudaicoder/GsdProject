@@ -1,0 +1,114 @@
+.login-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 100vh;
+}
+
+// Left panel — deep navy branding (UI-SPEC: #1E3A5F)
+.login-left {
+  background-color: #1E3A5F;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px;
+
+  .branding {
+    text-align: center;
+    color: #FFFFFF;
+  }
+
+  .logo-circle {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 2px solid #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 24px;
+
+    span {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #FFFFFF;
+    }
+  }
+
+  .system-name {
+    font-size: 1.75rem; // Display size per UI-SPEC
+    font-weight: 600;
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+
+  .tagline {
+    font-size: 0.875rem;
+    color: #93C5FD; // UI-SPEC tagline color
+    line-height: 1.5;
+  }
+}
+
+// Right panel — white form area
+.login-right {
+  background-color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px;
+}
+
+.login-form-container {
+  width: 100%;
+  max-width: 400px;
+}
+
+.form-title {
+  font-size: 1.25rem; // Heading size per UI-SPEC
+  font-weight: 600;
+  margin-bottom: 32px;
+  color: #111827;
+}
+
+.field {
+  margin-bottom: 16px;
+
+  label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #374151;
+  }
+
+  .field-error {
+    display: block;
+    color: #DC2626;
+    font-size: 0.75rem;
+    margin-top: 4px;
+  }
+}
+
+.w-full {
+  width: 100%;
+}
+
+:host ::ng-deep {
+  .login-btn {
+    height: 44px; // UI-SPEC: primary CTA height
+    margin-top: 8px;
+  }
+
+  .p-message {
+    margin-bottom: 16px;
+  }
+}
+
+// Responsive: below 768px, hide left panel (UI-SPEC)
+@media (max-width: 768px) {
+  .login-wrapper {
+    grid-template-columns: 1fr;
+  }
+  .login-left {
+    display: none;
+  }
+}

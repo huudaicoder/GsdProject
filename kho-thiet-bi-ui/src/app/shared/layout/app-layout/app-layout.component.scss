@@ -1,0 +1,17 @@
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.main-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin-left: var(--sidebar-width, 256px);
+}
+
+.content-area {
+  padding: 24px; // lg spacing token
+  flex: 1;
+  background-color: var(--color-bg, #F8F9FA);
+}

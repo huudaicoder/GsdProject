@@ -1,0 +1,43 @@
+:host {
+  display: block;
+}
+
+:host ::ng-deep .header-toolbar {
+  background: #FFFFFF;
+  border: none;
+  border-bottom: 1px solid #E5E7EB;
+  border-radius: 0;
+  height: var(--header-height, 56px);
+  padding: 0 24px;
+}
+
+.page-title {
+  font-size: 1.25rem; // Heading size per UI-SPEC
+  font-weight: 600;
+  color: #111827;
+  margin: 0;
+}
+
+.admin-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.avatar-circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #EFF6FF; // UI-SPEC accent light
+  color: #2563EB; // UI-SPEC accent
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.admin-name {
+  font-size: 0.875rem;
+  color: #374151;
+}
