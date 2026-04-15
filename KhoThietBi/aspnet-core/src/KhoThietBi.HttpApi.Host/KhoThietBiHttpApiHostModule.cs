@@ -13,6 +13,7 @@ using KhoThietBi.MultiTenancy;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.LeptonXLite;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.LeptonXLite.Bundling;
 using Microsoft.OpenApi.Models;
+using OpenIddict.Server;
 using OpenIddict.Validation.AspNetCore;
 using Volo.Abp;
 using Volo.Abp.Account;
@@ -22,6 +23,7 @@ using Volo.Abp.AspNetCore.Mvc;
 using Volo.Abp.AspNetCore.Mvc.UI.Bundling;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.Shared;
 using Volo.Abp.AspNetCore.Serilog;
+using Volo.Abp.Auditing;
 using Volo.Abp.Autofac;
 using Volo.Abp.Localization;
 using Volo.Abp.Modularity;
@@ -47,6 +49,12 @@ public class KhoThietBiHttpApiHostModule : AbpModule
 {
     public override void PreConfigureServices(ServiceConfigurationContext context)
     {
+        // D-08: JWT access token lifetime = 8 hours (admin-only internal tool)
+        PreConfigure<OpenIddictServerBuilder>(builder =>
+        {
+            builder.SetAccessTokenLifetime(TimeSpan.FromHours(8));
+        });
+
         PreConfigure<OpenIddictBuilder>(builder =>
         {
             builder.AddValidation(options =>
@@ -70,6 +78,7 @@ public class KhoThietBiHttpApiHostModule : AbpModule
         ConfigureVirtualFileSystem(context);
         ConfigureCors(context, configuration);
         ConfigureSwaggerServices(context, configuration);
+        ConfigureAuditLogging();
     }
 
     private void ConfigureAuthentication(ServiceConfigurationContext context)
@@ -153,6 +162,18 @@ public class KhoThietBiHttpApiHostModule : AbpModule
                 options.DocInclusionPredicate((docName, description) => true);
                 options.CustomSchemaIds(type => type.FullName);
             });
+    }
+
+    private void ConfigureAuditLogging()
+    {
+        // D-11, D-28: Track old/new values for all entities permanently
+        Configure<AbpAuditingOptions>(options =>
+        {
+            options.IsEnabled = true;
+            options.EntityHistorySelectors.AddAllEntities();
+            // D-29: No retention policy — keep audit logs permanently
+            // D-30: No audit log UI in v1
+        });
     }
 
     private void ConfigureCors(ServiceConfigurationContext context, IConfiguration configuration)
