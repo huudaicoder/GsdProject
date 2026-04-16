@@ -44,7 +44,7 @@
   5. After any write operation (POST/PUT/DELETE), an ABP AuditLog record exists with: userId, entity type, entity ID, action type, timestamp, old values (JSON), new values (JSON) — created atomically, no orphan on rollback
 **Plans:** 2 plans
 Plans:
-- [ ] 01-01-PLAN.md — Backend: ABP scaffold + PostgreSQL + OpenIddict ROPC + 8h JWT + Vietnamese error messages + Audit Logging
+- [x] 01-01-PLAN.md — Backend: ABP scaffold + PostgreSQL + OpenIddict ROPC + 8h JWT + Vietnamese error messages + Audit Logging
 - [ ] 01-02-PLAN.md — Frontend: Angular 19 scaffold + AuthService + login page + app shell + sidebar + dashboard placeholder
 **UI hint**: yes
 
