@@ -17,10 +17,10 @@ interface KpiCard {
 export class DashboardComponent {
   // D-36: Static KPI cards with 0 values (no API calls)
   kpiCards: KpiCard[] = [
-    { label: 'Tong thiet bi', icon: 'pi pi-box', value: '0' },
-    { label: 'Dang ban giao', icon: 'pi pi-send', value: '0' },
-    { label: 'Trong du an', icon: 'pi pi-briefcase', value: '0' },
-    { label: 'Dang bao tri', icon: 'pi pi-wrench', value: '0' },
-    { label: 'Gia tri ton kho', icon: 'pi pi-dollar', value: '0 d' },
+    { label: 'Tổng thiết bị', icon: 'pi pi-box', value: '0' },
+    { label: 'Đang bàn giao', icon: 'pi pi-send', value: '0' },
+    { label: 'Trong dự án', icon: 'pi pi-briefcase', value: '0' },
+    { label: 'Đang bảo trì', icon: 'pi pi-wrench', value: '0' },
+    { label: 'Giá trị tồn kho', icon: 'pi pi-dollar', value: '0 đ' },
   ];
 }

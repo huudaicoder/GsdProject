@@ -22,21 +22,21 @@ export class HeaderComponent {
     const path = this.router.url.split('/').pop() || 'dashboard';
     const titles: Record<string, string> = {
       'dashboard': 'Dashboard',
-      'categories': 'Danh muc thiet bi',
-      'suppliers': 'Nha cung cap',
-      'departments': 'Phong ban',
-      'equipment': 'Thiet bi',
-      'employees': 'Nhan vien',
-      'projects': 'Du an',
-      'imports': 'Nhap kho',
-      'payments': 'Thanh toan NCC',
-      'assignments': 'Ban giao nhan vien',
-      'allocations': 'Cap cho du an',
-      'maintenance': 'Bao tri',
-      'liquidations': 'Thanh ly',
-      'finance': 'Tai chinh',
-      'reports': 'Bao cao',
-      'export': 'Xuat du lieu'
+      'categories': 'Danh mục thiết bị',
+      'suppliers': 'Nhà cung cấp',
+      'departments': 'Phòng ban',
+      'equipment': 'Thiết bị',
+      'employees': 'Nhân viên',
+      'projects': 'Dự án',
+      'imports': 'Nhập kho',
+      'payments': 'Thanh toán NCC',
+      'assignments': 'Bàn giao nhân viên',
+      'allocations': 'Cấp cho dự án',
+      'maintenance': 'Bảo trì',
+      'liquidations': 'Thanh lý',
+      'finance': 'Tài chính',
+      'reports': 'Báo cáo',
+      'export': 'Xuất dữ liệu'
     };
     return titles[path] || 'Dashboard';
   }

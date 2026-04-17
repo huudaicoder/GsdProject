@@ -34,46 +34,46 @@ export class SidebarComponent implements OnInit, OnDestroy {
   // D-32: 5 navigation groups (Dashboard standalone + 4 collapsible groups)
   navGroups: NavGroup[] = [
     {
-      label: 'Danh muc',
+      label: 'Danh mục',
       icon: 'pi pi-folder-open',
       expanded: false, // D-33: closed by default
       items: [
-        { label: 'Danh muc thiet bi', icon: 'pi pi-tag', route: '/categories', disabled: true },
-        { label: 'Nha cung cap', icon: 'pi pi-building', route: '/suppliers', disabled: true },
-        { label: 'Phong ban', icon: 'pi pi-sitemap', route: '/departments', disabled: true },
-        { label: 'Thiet bi', icon: 'pi pi-box', route: '/equipment', disabled: true },
-        { label: 'Nhan vien', icon: 'pi pi-users', route: '/employees', disabled: true },
-        { label: 'Du an', icon: 'pi pi-briefcase', route: '/projects', disabled: true },
+        { label: 'Danh mục thiết bị', icon: 'pi pi-tag', route: '/categories', disabled: true },
+        { label: 'Nhà cung cấp', icon: 'pi pi-building', route: '/suppliers', disabled: true },
+        { label: 'Phòng ban', icon: 'pi pi-sitemap', route: '/departments', disabled: true },
+        { label: 'Thiết bị', icon: 'pi pi-box', route: '/equipment', disabled: true },
+        { label: 'Nhân viên', icon: 'pi pi-users', route: '/employees', disabled: true },
+        { label: 'Dự án', icon: 'pi pi-briefcase', route: '/projects', disabled: true },
       ]
     },
     {
-      label: 'Nhap xuat kho',
+      label: 'Nhập xuất kho',
       icon: 'pi pi-arrow-right-arrow-left',
       expanded: false,
       items: [
-        { label: 'Nhap kho', icon: 'pi pi-download', route: '/imports', disabled: true },
-        { label: 'Thanh toan NCC', icon: 'pi pi-credit-card', route: '/payments', disabled: true },
-        { label: 'Ban giao nhan vien', icon: 'pi pi-send', route: '/assignments', disabled: true },
-        { label: 'Cap cho du an', icon: 'pi pi-share-alt', route: '/allocations', disabled: true },
+        { label: 'Nhập kho', icon: 'pi pi-download', route: '/imports', disabled: true },
+        { label: 'Thanh toán NCC', icon: 'pi pi-credit-card', route: '/payments', disabled: true },
+        { label: 'Bàn giao nhân viên', icon: 'pi pi-send', route: '/assignments', disabled: true },
+        { label: 'Cấp cho dự án', icon: 'pi pi-share-alt', route: '/allocations', disabled: true },
       ]
     },
     {
-      label: 'Quan ly',
+      label: 'Quản lý',
       icon: 'pi pi-cog',
       expanded: false,
       items: [
-        { label: 'Bao tri', icon: 'pi pi-wrench', route: '/maintenance', disabled: true },
-        { label: 'Thanh ly', icon: 'pi pi-trash', route: '/liquidations', disabled: true },
+        { label: 'Bảo trì', icon: 'pi pi-wrench', route: '/maintenance', disabled: true },
+        { label: 'Thanh lý', icon: 'pi pi-trash', route: '/liquidations', disabled: true },
       ]
     },
     {
-      label: 'Thong ke',
+      label: 'Thống kê',
       icon: 'pi pi-chart-bar',
       expanded: false,
       items: [
-        { label: 'Tai chinh', icon: 'pi pi-dollar', route: '/finance', disabled: true },
-        { label: 'Bao cao', icon: 'pi pi-chart-line', route: '/reports', disabled: true },
-        { label: 'Xuat du lieu', icon: 'pi pi-file-export', route: '/export', disabled: true },
+        { label: 'Tài chính', icon: 'pi pi-dollar', route: '/finance', disabled: true },
+        { label: 'Báo cáo', icon: 'pi pi-chart-line', route: '/reports', disabled: true },
+        { label: 'Xuất dữ liệu', icon: 'pi pi-file-export', route: '/export', disabled: true },
       ]
     }
   ];

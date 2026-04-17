@@ -65,17 +65,17 @@ export class LoginComponent {
         this.loading.set(false);
         if (err.status === 0) {
           // Network error
-          this.errorMessage.set('Khong the ket noi den may chu. Vui long thu lai sau.');
+          this.errorMessage.set('Không thể kết nối đến máy chủ. Vui lòng thử lại sau.');
         } else if (err.status === 400) {
           // OAuth2 error from /connect/token
           const desc = err.error?.error_description || '';
           if (desc.includes('khong ton tai')) {
-            this.errorMessage.set('Tai khoan khong ton tai. Vui long kiem tra lai ten dang nhap.');
+            this.errorMessage.set('Tên đăng nhập không tồn tại. Vui lòng kiểm tra lại.');
           } else {
-            this.errorMessage.set('Mat khau khong dung. Vui long thu lai.');
+            this.errorMessage.set('Mật khẩu không đúng. Vui lòng thử lại.');
           }
         } else {
-          this.errorMessage.set('Khong the ket noi den may chu. Vui long thu lai sau.');
+          this.errorMessage.set('Không thể kết nối đến máy chủ. Vui lòng thử lại sau.');
         }
       }
     });
